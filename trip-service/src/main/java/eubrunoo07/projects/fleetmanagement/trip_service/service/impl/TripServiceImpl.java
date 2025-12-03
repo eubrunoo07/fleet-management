@@ -28,17 +28,11 @@ public class TripServiceImpl implements TripService {
     @Autowired
     private TripValidator validator;
     @Autowired
-    private VehicleClient vehicleClient;
-    @Autowired
-    private DriverClient driverClient;
-    @Autowired
     private TripStartedPublisher publisher;
 
     @Override
     public Trip initTrip(Trip trip) {
         validator.validateTripRequest(trip);
-        vehicleClient.updateStatus(trip.getVehicleId(), "TRAVELING");
-        driverClient.updateStatus(trip.getDriverId(), "TRAVELING");
         var tripSaved = tripRepository.save(trip);
         publisher.publish(tripSaved);
         return tripSaved;

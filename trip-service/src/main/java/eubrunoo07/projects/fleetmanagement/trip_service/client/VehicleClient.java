@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient(name = "vehicles", url = "${fleet-management.trip-service.clients.vehicles.url}")
 public interface VehicleClient {
-
     @GetMapping("/{id}")
     ResponseEntity<VehicleRepresentation> getVehicle(@PathVariable Long id);
-
-    @PutMapping("/status/{id}/{status}")
-    ResponseEntity<Void> updateStatus(@PathVariable Long id, @PathVariable String status);
 }
