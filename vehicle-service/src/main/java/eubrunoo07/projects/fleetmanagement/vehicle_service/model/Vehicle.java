@@ -7,17 +7,6 @@ import lombok.Data;
 @Entity
 @Table(name = "vehicle")
 @Data
-
-/**
- * CREATE TABLE vehicle (
- *     id SERIAL PRIMARY KEY,
- *     license_plate VARCHAR(10) NOT NULL UNIQUE,
- *     model VARCHAR(100) NOT NULL,
- *     model_year INTEGER NOT NULL CHECK (model_year > 2000),
- *     status VARCHAR(20) CHECK (status IN ('A', 'B', 'C', 'D', 'E'))
- * );
- */
-
 public class Vehicle {
 
     @Id

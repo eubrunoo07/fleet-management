@@ -17,7 +17,7 @@ CREATE TABLE trip (
     origin VARCHAR(150) NOT NULL,
     destination VARCHAR(150) NOT NULL,
     start_datetime TIMESTAMP NOT NULL,
-    end_datetime TIMESTAMP NOT NULL,
+    end_datetime TIMESTAMP,
     status VARCHAR(20) NOT NULL CHECK (
         status IN ('PLANNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELED')
     )
