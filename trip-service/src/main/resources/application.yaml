@@ -16,6 +16,13 @@ spring:
       hibernate:
         format_sql: true
 fleet-management:
+  config:
+    kafka:
+      server-url: "http://localhost:29092"
+      topics:
+        trip-started: "fleet.trip.started"
+        trip-ended: "fleet.trip.ended"
+
   trip-service:
     clients:
       drivers:
