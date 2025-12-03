@@ -22,3 +22,5 @@ fleet-management:
         url: http://localhost:8081/fleet/management/api/drivers
       vehicles:
         url: http://localhost:8082/fleet/management/api/vehicles
+server:
+  port: 8083
