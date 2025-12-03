@@ -43,6 +43,11 @@ public class DriverController {
     public ResponseEntity<DriverResponseDTO> updateDriver(@PathVariable Long id, @RequestBody@Valid DriverRequestDTO dto){
         return ResponseEntity.status(HttpStatus.OK).body(mapper.mapToResponse(driverService.updateDriver(dto, id)));
     }
+    @PutMapping("/status/{id}/{status}")
+    public ResponseEntity<Void> updateStatus(@PathVariable Long id, @PathVariable String status){
+        driverService.updateStatus(id, status);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDriver(@PathVariable Long id){
         driverService.deleteDriver(id);

@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public enum VehicleStatus {
     AVAILABLE,
-    IN_TRIP,
+    TRAVELING,
     MAINTENANCE
 }

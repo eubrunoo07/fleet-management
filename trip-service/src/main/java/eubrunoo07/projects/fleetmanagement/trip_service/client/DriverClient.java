@@ -5,11 +5,14 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient(name = "drivers", url = "${fleet-management.trip-service.clients.drivers.url}")
 public interface DriverClient {
 
     @GetMapping("/{id}")
-    public ResponseEntity<DriverRepresentation> getDriverById(@PathVariable Long id);
+    ResponseEntity<DriverRepresentation> getDriverById(@PathVariable Long id);
+    @PutMapping("/status/{id}/{status}")
+    ResponseEntity<Void> updateStatus(@PathVariable Long id, @PathVariable String status);
 
 }

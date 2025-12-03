@@ -22,6 +22,7 @@ public class DriverMapper {
                         .cnhNumber(driver.getCnhNumber())
                         .fullName(driver.getFullName())
                         .active(driver.getActive())
+                        .status(String.valueOf(driver.getStatus()))
                         .build();
     }
 

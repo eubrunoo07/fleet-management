@@ -3,6 +3,7 @@ package eubrunoo07.projects.fleetmanagement.driver_service.service.impl;
 import eubrunoo07.projects.fleetmanagement.driver_service.dto.DriverRequestDTO;
 import eubrunoo07.projects.fleetmanagement.driver_service.dto.DriverResponseDTO;
 import eubrunoo07.projects.fleetmanagement.driver_service.enums.CnhCategory;
+import eubrunoo07.projects.fleetmanagement.driver_service.enums.DriverStatus;
 import eubrunoo07.projects.fleetmanagement.driver_service.exception.DriverNotFoundException;
 import eubrunoo07.projects.fleetmanagement.driver_service.mapper.DriverMapper;
 import eubrunoo07.projects.fleetmanagement.driver_service.model.Driver;
@@ -65,6 +66,15 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = driverRepository.findById(id).orElseThrow(() ->
                 new DriverNotFoundException("Driver not found with id: " + id));
         driver.setActive(false);
+        driver.setStatus(DriverStatus.INACTIVE);
+        driverRepository.save(driver);
+    }
+
+    @Override
+    public void updateStatus(Long id, String status) {
+        Driver driver = driverRepository.findById(id).orElseThrow(() ->
+                new DriverNotFoundException("Driver not found with id: " + id));
+        driver.setStatus(DriverStatus.valueOf(status));
         driverRepository.save(driver);
     }
 }
