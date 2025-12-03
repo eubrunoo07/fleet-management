@@ -1,3 +1,11 @@
 spring:
   application:
     name: trip-service
+
+fleet-management:
+  trip-service:
+    clients:
+      drivers:
+        url: http://localhost:8081/fleet/management/api/drivers
+      vehicles:
+        url: http://localhost:8082/fleet/management/api/vehicles
