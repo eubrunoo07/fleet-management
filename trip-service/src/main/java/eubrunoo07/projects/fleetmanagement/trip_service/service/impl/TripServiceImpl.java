@@ -7,6 +7,7 @@ import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripResponseDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripNotFoundException;
 import eubrunoo07.projects.fleetmanagement.trip_service.mapper.TripMapper;
 import eubrunoo07.projects.fleetmanagement.trip_service.model.Trip;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripStartedPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.repository.TripRepository;
 import eubrunoo07.projects.fleetmanagement.trip_service.service.TripService;
 import eubrunoo07.projects.fleetmanagement.trip_service.validator.TripValidator;
@@ -30,13 +31,17 @@ public class TripServiceImpl implements TripService {
     private VehicleClient vehicleClient;
     @Autowired
     private DriverClient driverClient;
+    @Autowired
+    private TripStartedPublisher publisher;
 
     @Override
     public Trip initTrip(Trip trip) {
         validator.validateTripRequest(trip);
         vehicleClient.updateStatus(trip.getVehicleId(), "TRAVELING");
         driverClient.updateStatus(trip.getDriverId(), "TRAVELING");
-        return tripRepository.save(trip);
+        var tripSaved = tripRepository.save(trip);
+        publisher.publish(tripSaved);
+        return tripSaved;
     }
 
     @Override
