@@ -1,7 +1,20 @@
 spring:
   application:
     name: trip-service
+  datasource:
+    url: jdbc:postgresql://localhost:5555/fleetTrips
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
 
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 fleet-management:
   trip-service:
     clients:
