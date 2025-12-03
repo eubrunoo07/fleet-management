@@ -4,7 +4,9 @@ CREATE TABLE drivers (
     full_name VARCHAR(150) NOT NULL,
     cpf CHAR(11) NOT NULL UNIQUE CHECK (cpf ~ '^[0-9]{11}$'),
     cnh_number CHAR(9) NOT NULL CHECK (cnh_number ~ '^[0-9]{9}$'),
-    cnh_category varchar(20) check (cnh_category in ('A', 'B', 'C', 'D', 'E'))
+    cnh_category varchar(20) check (cnh_category in ('A', 'B', 'C', 'D', 'E')),
+    cnh_expires_date DATE NOT NULL,
+    active boolean default true
 );
 
 create database fleetTrips;
