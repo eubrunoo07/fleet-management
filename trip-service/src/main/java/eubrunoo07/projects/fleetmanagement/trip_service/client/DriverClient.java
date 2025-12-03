@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient(name = "drivers", url = "${fleet-management.trip-service.clients.drivers.url}")
 public interface DriverClient {
-
     @GetMapping("/{id}")
     ResponseEntity<DriverRepresentation> getDriverById(@PathVariable Long id);
-    @PutMapping("/status/{id}/{status}")
-    ResponseEntity<Void> updateStatus(@PathVariable Long id, @PathVariable String status);
 
 }
