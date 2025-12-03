@@ -29,5 +29,7 @@ CREATE TABLE vehicle (
     license_plate VARCHAR(10) NOT NULL UNIQUE,
     model VARCHAR(100) NOT NULL,
     model_year INTEGER NOT NULL CHECK (model_year > 2000),
-    status VARCHAR(20) CHECK (status IN ('A', 'B', 'C', 'D', 'E'))
+    status VARCHAR(20) CHECK (status IN ('AVAILABLE', 'IN_TRIP', 'MAINTENANCE')),
+    active boolean default true
+    brand not null varchar(20)
 );
