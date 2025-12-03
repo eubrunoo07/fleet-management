@@ -18,4 +18,6 @@ public interface VehicleService {
     Vehicle updateVehicle(Long id, @Valid VehicleRequestDTO dto);
 
     void deleteVehicle(Long id);
+
+    void updateStatus(Long id, String status);
 }

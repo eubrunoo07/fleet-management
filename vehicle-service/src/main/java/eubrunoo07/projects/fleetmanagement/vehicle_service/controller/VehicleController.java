@@ -39,6 +39,11 @@ public class VehicleController {
     public ResponseEntity<VehicleResponseDTO> updateVehicle(@PathVariable Long id, @RequestBody@Valid VehicleRequestDTO dto){
         return ResponseEntity.status(HttpStatus.OK).body(mapper.mapToResponse(vehicleService.updateVehicle(id, dto)));
     }
+    @PutMapping("/status/{id}/{status}")
+    public ResponseEntity<Void> updateStatus(@PathVariable Long id, @PathVariable String status){
+        vehicleService.updateStatus(id, status);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id){
         vehicleService.deleteVehicle(id);

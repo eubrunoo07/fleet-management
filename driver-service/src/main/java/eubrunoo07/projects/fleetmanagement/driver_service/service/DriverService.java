@@ -17,4 +17,6 @@ public interface DriverService {
     Driver updateDriver(DriverRequestDTO dto, Long id);
 
     void deleteDriver(Long id);
+
+    void updateStatus(Long id, String status);
 }

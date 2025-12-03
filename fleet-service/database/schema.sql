@@ -6,6 +6,9 @@ CREATE TABLE drivers (
     cnh_number CHAR(9) NOT NULL CHECK (cnh_number ~ '^[0-9]{9}$'),
     cnh_category varchar(20) check (cnh_category in ('A', 'B', 'C', 'D', 'E')),
     cnh_expires_date DATE NOT NULL,
+    driver_status VARCHAR(20) NOT NULL CHECK (
+        driver_status IN ('AVAILABLE', 'TRAVELING', 'INACTIVE')
+    )
     active boolean default true
 );
 
@@ -29,7 +32,7 @@ CREATE TABLE vehicle (
     license_plate VARCHAR(10) NOT NULL UNIQUE,
     model VARCHAR(100) NOT NULL,
     model_year INTEGER NOT NULL CHECK (model_year > 2000),
-    status VARCHAR(20) CHECK (status IN ('AVAILABLE', 'IN_TRIP', 'MAINTENANCE')),
+    status VARCHAR(20) CHECK (status IN ('AVAILABLE', 'TRAVELING', 'MAINTENANCE')),
     active boolean default true
     brand not null varchar(20)
 );

@@ -1,6 +1,7 @@
 package eubrunoo07.projects.fleetmanagement.driver_service.model;
 
 import eubrunoo07.projects.fleetmanagement.driver_service.enums.CnhCategory;
+import eubrunoo07.projects.fleetmanagement.driver_service.enums.DriverStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,10 +33,14 @@ public class Driver {
     private YearMonth cnhExpiresDate;
     @Column(name = "active")
     private Boolean active;
+    @Column(name = "driver_status")
+    @Enumerated(EnumType.STRING)
+    private DriverStatus status;
 
     @PrePersist
     private void prePersist(){
         this.active = true;
+        this.status = DriverStatus.AVAILABLE;
     }
 
 }

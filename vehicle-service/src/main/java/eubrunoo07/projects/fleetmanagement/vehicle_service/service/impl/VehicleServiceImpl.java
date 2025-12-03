@@ -68,4 +68,13 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setActive(false);
         vehicleRepository.save(vehicle);
     }
+
+    @Override
+    public void updateStatus(Long id, String status) {
+        Vehicle vehicle = vehicleRepository
+                .findById(id).orElseThrow(() ->
+                        new VehicleNotFoundException("Vehicle not found with id: " + id));
+        vehicle.setStatus(VehicleStatus.valueOf(status));
+        vehicleRepository.save(vehicle);
+    }
 }

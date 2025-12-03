@@ -1,5 +1,7 @@
 package eubrunoo07.projects.fleetmanagement.trip_service.service.impl;
 
+import eubrunoo07.projects.fleetmanagement.trip_service.client.DriverClient;
+import eubrunoo07.projects.fleetmanagement.trip_service.client.VehicleClient;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripRequestDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripResponseDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripNotFoundException;
@@ -24,10 +26,16 @@ public class TripServiceImpl implements TripService {
     private TripMapper mapper;
     @Autowired
     private TripValidator validator;
+    @Autowired
+    private VehicleClient vehicleClient;
+    @Autowired
+    private DriverClient driverClient;
 
     @Override
     public Trip initTrip(Trip trip) {
         validator.validateTripRequest(trip);
+        vehicleClient.updateStatus(trip.getVehicleId(), "TRAVELING");
+        driverClient.updateStatus(trip.getDriverId(), "TRAVELING");
         return tripRepository.save(trip);
     }
 

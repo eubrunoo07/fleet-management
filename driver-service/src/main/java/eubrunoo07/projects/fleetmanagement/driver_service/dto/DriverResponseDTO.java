@@ -22,6 +22,7 @@ public class DriverResponseDTO {
     private String cnhCategory;
     @JsonFormat(pattern = "MM-yyyy", shape = JsonFormat.Shape.STRING)
     private YearMonth cnhExpiresDate;
+    private String status;
     private boolean active;
 
 }
