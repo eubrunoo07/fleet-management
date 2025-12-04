@@ -27,6 +27,11 @@ public class TripController {
         Trip trip = mapper.mapToEntity(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToResponse(tripService.initTrip(trip)));
     }
+    @PostMapping("/finish/{id}")
+    public ResponseEntity<Void> finishTrip(@PathVariable Long id){
+        tripService.finishTrip(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
     @GetMapping("/")
     public ResponseEntity<List<TripResponseDTO>> getTrips(){
         return ResponseEntity.status(HttpStatus.OK).body(tripService.getAllTrips());

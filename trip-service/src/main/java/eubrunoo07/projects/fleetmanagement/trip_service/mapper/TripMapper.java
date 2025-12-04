@@ -8,6 +8,7 @@ import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripResponseDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.VehicleInfoDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.enums.TripStatus;
 import eubrunoo07.projects.fleetmanagement.trip_service.model.Trip;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.representation.TripFinishedRepresentation;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.representation.TripStartedRepresentation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class TripMapper {
         return trip;
     }
 
-    public TripStartedRepresentation mapToRepresentation(Trip trip) {
+    public TripStartedRepresentation mapToRepresentationStarted(Trip trip) {
         var tripStarted = new TripStartedRepresentation();
         tripStarted.setTripId(trip.getId());
         tripStarted.setStatus(String.valueOf(trip.getStatus()));
@@ -74,5 +75,13 @@ public class TripMapper {
         tripStarted.setVehicleId(trip.getVehicleId());
         tripStarted.setStartDateTime(trip.getStartDateTime());
         return tripStarted;
+    }
+
+    public TripFinishedRepresentation mapToRepresentationFinished(Trip trip) {
+        var tripFinished = new TripFinishedRepresentation();
+        tripFinished.setDriverId(trip.getDriverId());
+        tripFinished.setStatus(String.valueOf(trip.getStatus()));
+        tripFinished.setVehicleId(trip.getVehicleId());
+        return tripFinished;
     }
 }

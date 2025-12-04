@@ -16,4 +16,6 @@ public interface TripService {
     TripResponseDTO getTripById(Long id);
 
     Trip updateTrip(Long id, @Valid TripRequestDTO dto);
+
+    void finishTrip(Long id);
 }

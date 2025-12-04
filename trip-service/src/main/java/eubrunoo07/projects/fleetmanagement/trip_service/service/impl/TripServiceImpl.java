@@ -4,9 +4,12 @@ import eubrunoo07.projects.fleetmanagement.trip_service.client.DriverClient;
 import eubrunoo07.projects.fleetmanagement.trip_service.client.VehicleClient;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripRequestDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripResponseDTO;
+import eubrunoo07.projects.fleetmanagement.trip_service.enums.TripStatus;
 import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripNotFoundException;
+import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripValidationException;
 import eubrunoo07.projects.fleetmanagement.trip_service.mapper.TripMapper;
 import eubrunoo07.projects.fleetmanagement.trip_service.model.Trip;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripFinishedPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripStartedPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.repository.TripRepository;
 import eubrunoo07.projects.fleetmanagement.trip_service.service.TripService;
@@ -15,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +32,15 @@ public class TripServiceImpl implements TripService {
     @Autowired
     private TripValidator validator;
     @Autowired
-    private TripStartedPublisher publisher;
+    private TripStartedPublisher startedPublisher;
+    @Autowired
+    private TripFinishedPublisher finishedPublisher;
 
     @Override
     public Trip initTrip(Trip trip) {
         validator.validateTripRequest(trip);
         var tripSaved = tripRepository.save(trip);
-        publisher.publish(tripSaved);
+        startedPublisher.publish(tripSaved);
         return tripSaved;
     }
 
@@ -61,5 +67,18 @@ public class TripServiceImpl implements TripService {
         validator.validateTripRequest(trip);
         tripRepository.save(trip);
         return trip;
+    }
+
+    @Override
+    public void finishTrip(Long id) {
+        Trip trip = tripRepository.findById(id).orElseThrow(() ->
+                new TripNotFoundException("Trip not found with id: " + id));
+        if(!trip.getStatus().equals(TripStatus.IN_PROGRESS)){
+            throw new TripValidationException("To finish a trip must be in progress");
+        }
+        trip.setStatus(TripStatus.COMPLETED);
+        trip.setEndDateTime(LocalDateTime.now());
+        tripRepository.save(trip);
+        finishedPublisher.publish(trip);
     }
 }
