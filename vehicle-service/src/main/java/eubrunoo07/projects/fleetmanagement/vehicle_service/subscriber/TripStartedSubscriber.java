@@ -1,7 +1,6 @@
 package eubrunoo07.projects.fleetmanagement.vehicle_service.subscriber;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eubrunoo07.projects.fleetmanagement.vehicle_service.enums.VehicleStatus;
 import eubrunoo07.projects.fleetmanagement.vehicle_service.service.UpdateVehicleStatusService;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class UpdateVehicleStatusSubscriber {
+public class TripStartedSubscriber {
 
     @Autowired
     private ObjectMapper objectMapper;
