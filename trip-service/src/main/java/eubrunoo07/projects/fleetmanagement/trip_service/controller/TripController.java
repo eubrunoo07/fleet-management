@@ -32,6 +32,11 @@ public class TripController {
         tripService.finishTrip(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity<Void> cancelTrip(@PathVariable Long id){
+        tripService.cancelTrip(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
     @GetMapping("/")
     public ResponseEntity<List<TripResponseDTO>> getTrips(){
         return ResponseEntity.status(HttpStatus.OK).body(tripService.getAllTrips());

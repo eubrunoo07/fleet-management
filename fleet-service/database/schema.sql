@@ -24,6 +24,7 @@ CREATE TABLE trip (
     status VARCHAR(20) NOT NULL CHECK (
         status IN ('PLANNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELED')
     )
+
 );
 
 create database fleetVehicles;

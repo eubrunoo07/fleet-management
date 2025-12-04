@@ -9,6 +9,7 @@ import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripNotFoundEx
 import eubrunoo07.projects.fleetmanagement.trip_service.exception.TripValidationException;
 import eubrunoo07.projects.fleetmanagement.trip_service.mapper.TripMapper;
 import eubrunoo07.projects.fleetmanagement.trip_service.model.Trip;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripCanceledPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripFinishedPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripStartedPublisher;
 import eubrunoo07.projects.fleetmanagement.trip_service.repository.TripRepository;
@@ -35,6 +36,8 @@ public class TripServiceImpl implements TripService {
     private TripStartedPublisher startedPublisher;
     @Autowired
     private TripFinishedPublisher finishedPublisher;
+    @Autowired
+    private TripCanceledPublisher canceledPublisher;
 
     @Override
     public Trip initTrip(Trip trip) {
@@ -80,5 +83,17 @@ public class TripServiceImpl implements TripService {
         trip.setEndDateTime(LocalDateTime.now());
         tripRepository.save(trip);
         finishedPublisher.publish(trip);
+    }
+
+    @Override
+    public void cancelTrip(Long id) {
+        Trip trip = tripRepository.findById(id).orElseThrow(() ->
+                new TripNotFoundException("Trip not found with id: " + id));
+        if(!trip.getStatus().equals(TripStatus.IN_PROGRESS)){
+            throw new TripValidationException("To cancel a trip must be in progress");
+        }
+        trip.setStatus(TripStatus.CANCELED);
+        tripRepository.save(trip);
+        canceledPublisher.publish(trip);
     }
 }

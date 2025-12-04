@@ -8,6 +8,8 @@ import eubrunoo07.projects.fleetmanagement.trip_service.dto.TripResponseDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.dto.VehicleInfoDTO;
 import eubrunoo07.projects.fleetmanagement.trip_service.enums.TripStatus;
 import eubrunoo07.projects.fleetmanagement.trip_service.model.Trip;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.TripCanceledPublisher;
+import eubrunoo07.projects.fleetmanagement.trip_service.publisher.representation.CanceledTripRepresentation;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.representation.TripFinishedRepresentation;
 import eubrunoo07.projects.fleetmanagement.trip_service.publisher.representation.TripStartedRepresentation;
 import org.springframework.beans.BeanUtils;
@@ -83,5 +85,12 @@ public class TripMapper {
         tripFinished.setStatus(String.valueOf(trip.getStatus()));
         tripFinished.setVehicleId(trip.getVehicleId());
         return tripFinished;
+    }
+
+    public CanceledTripRepresentation mapToRepresentationCanceled(Trip trip) {
+        var canceledTrip = new CanceledTripRepresentation();
+        canceledTrip.setDriverId(trip.getDriverId());
+        canceledTrip.setVehicleId(trip.getVehicleId());
+        return canceledTrip;
     }
 }
