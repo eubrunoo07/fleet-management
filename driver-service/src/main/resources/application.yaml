@@ -27,5 +27,6 @@ fleet-management:
       topics:
         trip-started: "fleet.trip.started"
         trip-ended: "fleet.trip.ended"
+        trip-canceled: "fleet.trip.canceled"
 server:
   port: 8081
