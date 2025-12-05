@@ -1,3 +1,10 @@
 spring:
   application:
     name: evidence-service
+minio:
+  url: 'http://localhost:9000'
+  access-key: minioadmin
+  secret-key: minioadmin123
+  bucket-name: fleetmanagement
+server:
+    port: 8084
